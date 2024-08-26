@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <Head>
-        <title>Minha Homepage</title>
+        <title>Painel Administrativo</title>
         <meta name="description" content="Uma homepage básica usando Next.js e Tailwind CSS" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
