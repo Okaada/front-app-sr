@@ -1,7 +1,10 @@
 import Head from 'next/head';
+import '../globals.css'
+import Sidebar from '../components/Sidebar';
 
 export default function Home() {
   return (
+    
     <div className="flex flex-col min-h-screen">
       <Head>
         <title>Painel Administrativo</title>
@@ -9,6 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Sidebar />
       {/* Cabeçalho */}
       <header className="bg-blue-600 text-white p-4">
         <h1 className="text-3xl font-bold">Bem-vindo à Minha Homepage</h1>
