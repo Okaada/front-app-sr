@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
-
+import '../globals.css'
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState<string>('');

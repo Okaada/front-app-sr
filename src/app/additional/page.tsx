@@ -3,33 +3,30 @@
 import  React, {useEffect, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import Sidebar from '../components/Sidebar';
-import '../globals.css'
+import '../globals.css' // Certifique-se de que o caminho está correto
 
 
-interface Item {
-  item_id: number;
+interface Additional {
+  additional_id: number;
   name: string;
   value: number;
-  description: string;
-  is_active: boolean;
 }
 
-
-const ItemsPage: React.FC = () => {
-  const [items, setItems] = useState<Item[]>([]);
+const AdditionalPage: React.FC = () => {
+  const router = useRouter();
+  const [additionals, setAdditional] = useState<Additional[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const router = useRouter();
 
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost:5063/api/Item'); // Substitua pela URL da sua API
+        const response = await fetch('http://localhost:5063/api/Additional'); // Substitua pela URL da sua API
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        const data: Item[] = await response.json();
-        setItems(data);
+        const data: Additional[] = await response.json();
+        setAdditional(data);
       } catch (error: any) {
         router.push('/errorpage')
         setError(error.message);
@@ -42,46 +39,33 @@ const ItemsPage: React.FC = () => {
   }, []);
 
   const handleEditClick = (id: number) => {
-    router.push(`/item/edit-item/${id}`);
+    router.push(`/additional/edit-additional/${id}`);
   };
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
 
   return (
     <div className="flex">
       <Sidebar />
       <main className="flex-1 p-6 bg-gray-100">
         <div className="w-full max-w-4xl p-8 bg-white rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">Lista de Itens</h2>
+          <h2 className="text-2xl font-bold text-center text-gray-900 mb-6">Lista de adicioanis</h2>
           <div className="overflow-x-auto">
             <table className="w-full table-auto">
               <thead>
                 <tr className="bg-gray-200">
                   <th className="px-4 py-2 text-left text-gray-900">Nome</th>
                   <th className="px-4 py-2 text-left text-gray-900">Valor</th>
-                  <th className="px-4 py-2 text-left text-gray-900">Descrição</th>
-                  <th className="px-4 py-2 text-left text-gray-900">Status</th>
                   <th className="px-4 py-2 text-left text-gray-900">Editar</th>
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
-                  <tr key={item.item_id} className="border-t">
-                    <td className="px-4 py-2 text-gray-900">{item.name}</td>
-                    <td className="px-4 py-2 text-gray-900">R${item.value}</td>
-                    <td className="px-4 py-2 text-gray-900">{item.description}</td>
-                    <td className={`px-4 py-2 font-bold ${item.is_active ? 'text-green-600' : 'text-red-600'}`}>
-                      {item.is_active ? 'Ativo' : 'Inativo'}
-                    </td>
+                {additionals.map((additional) => (
+                  <tr key={additional.additional_id} className="border-t">
+                    <td className="px-4 py-2 text-gray-900">{additional.name}</td>
+                    <td className="px-4 py-2 text-gray-900">R${additional.value}</td>
+                
                     <td className="px-4 py-2">
                       <button
-                        onClick={() => handleEditClick(item.item_id)}
+                        onClick={() => handleEditClick(additional.additional_id)}
                         className="text-blue-600 hover:underline"
                       >
                         Editar
@@ -98,4 +82,4 @@ const ItemsPage: React.FC = () => {
   );
 };
 
-export default ItemsPage;
+export default AdditionalPage;
