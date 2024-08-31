@@ -18,23 +18,49 @@ const AdditionalPage: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  // useEffect(() => {
+  //   const fetchItems = async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:5063/api/Additional'); // Substitua pela URL da sua API
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       const data: Additional[] = await response.json();
+  //       setAdditional(data);
+  //     } catch (error: any) {
+  //       router.push('/errorpage')
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchItems();
+  // }, []);
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost:5063/api/Additional'); // Substitua pela URL da sua API
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data: Additional[] = await response.json();
-        setAdditional(data);
+        // Simula um atraso de rede
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+  
+        // Dados mockados
+        const mockData: Additional[] = [
+          { additional_id: 1, name: 'Bacon', value: 10.99},
+          { additional_id: 2, name: 'Calabresa', value: 10.99},
+          { additional_id: 3, name: 'Arroz', value: 10.99},
+        ];
+  
+        // Define os dados mockados no estado
+        setAdditional(mockData);
       } catch (error: any) {
-        router.push('/errorpage')
+        router.push('/errorpage');
         setError(error.message);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchItems();
   }, []);
 
