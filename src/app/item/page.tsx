@@ -21,25 +21,52 @@ const ItemsPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
+  // useEffect(() => {
+  //   const fetchItems = async () => {
+  //     try {
+  //       const response = await fetch('http://localhost:5063/api/Item'); // Substitua pela URL da sua API
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       const data: Item[] = await response.json();
+  //       setItems(data);
+  //     } catch (error: any) {
+  //       router.push('/errorpage')
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchItems();
+  // }, []);
+
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await fetch('http://localhost:5063/api/Item'); // Substitua pela URL da sua API
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data: Item[] = await response.json();
-        setItems(data);
+        // Simula um atraso de rede
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+  
+        // Dados mockados
+        const mockData: Item[] = [
+          { item_id: 1, name: 'Marmitex', value: 10.99, description: "Teste", is_active: true },
+          { item_id: 2, name: 'Salgado', value: 10.99, description: "Teste", is_active: true },
+          { item_id: 3, name: 'Doce', value: 10.99, description: "Teste", is_active: true },
+        ];
+  
+        // Define os dados mockados no estado
+        setItems(mockData);
       } catch (error: any) {
-        router.push('/errorpage')
+        router.push('/errorpage');
         setError(error.message);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchItems();
   }, []);
+  
 
   const handleEditClick = (id: number) => {
     router.push(`/item/edit-item/${id}`);
